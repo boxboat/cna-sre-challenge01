@@ -24,12 +24,17 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      - name: deploy to cluster
+        uses: steebchen/kubectl@v2.0.0
+        with: # defaults to latest kubectl binary version
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          command: get pods
 
-      - uses: Azure/k8s-deploy@v4
-        with:
-          namespace: 'myapp'
-          manifests: |
-            extras/jwt-secret.yaml
-            kubernetes-manifests
-            extras/frontend-ingress.yaml
-         # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
+      # - uses: Azure/k8s-deploy@v4
+      #   with:
+      #     namespace: 'myapp'
+      #     manifests: |
+      #       extras/jwt-secret.yaml
+      #       kubernetes-manifests
+      #       extras/frontend-ingress.yaml
+      #       images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
