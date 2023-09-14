@@ -35,3 +35,13 @@ jobs:
           # context: <context name>  #If left unspecified, current-context from kubeconfig is used as default
         id: setcontext
   
+      - uses: Azure/k8s-deploy@v4
+        with:
+         namespace: 'default'
+         manifests: |
+          extras/jwt-secret.yaml
+          kubernetes-manifests
+         # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
+         # imagepullsecrets: |
+         #  image-pull-secret1
+         #  image-pull-secret2
