@@ -15,6 +15,17 @@ jobs:
     if: github.event.pull_request.merged == false
     runs-on: ubuntu-latest
     steps:   
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+        id: install
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext
+      - name: GetClusterInfo
+        run: kubectl cluster-info --insecure-skip-tls-verify
       - uses: Azure/k8s-deploy@v4
         with:
            namespace: 'default'
@@ -27,7 +38,18 @@ jobs:
   Promote: 
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    steps:   
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+        id: install
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext
+      - name: GetClusterInfo
+        run: kubectl cluster-info --insecure-skip-tls-verify   
       - uses: Azure/k8s-deploy@v4
         with:
            namespace: 'default'
