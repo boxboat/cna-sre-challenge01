@@ -46,7 +46,7 @@ jobs:
            manifests: |
               kubernetes-manifests-update
            strategy: blue-green
-           action: deploy
+          #  action: deploy
            route-method: ingress # substitute with service/smi as per need
            version-switch-buffer: 2
            action: reject # substitute reject if you want to reject
