@@ -1,0 +1,44 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Blue-Green Promote/Reject
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # push:
+  #   branches: [ "testing/blue-green" ]
+  pull_request:
+    types: [closed]
+    branches: ["testing/blue-green"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+    Reject: 
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    steps:   
+      - uses: Azure/k8s-deploy@v4
+        with:
+           namespace: 'default'
+           manifests: |
+              kubernetes-manifests-update
+           strategy: blue-green
+           route-method: ingress
+           action: reject
+  
+  Promote: 
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:   
+      - uses: Azure/k8s-deploy@v4
+        with:
+           namespace: 'default'
+           manifests: |
+              kubernetes-manifests-update
+           strategy: blue-green
+           route-method: ingress
+           action: promote
