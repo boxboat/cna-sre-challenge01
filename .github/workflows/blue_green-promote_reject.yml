@@ -1,12 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Blue-Green Promote/Reject
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  # push:
-  #   branches: [ "testing/blue-green" ]
   pull_request:
     types: [closed]
     branches: ["testing/blue-green"]
@@ -17,7 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-    Reject: 
+  Reject: 
     if: github.event.pull_request.merged == false
     runs-on: ubuntu-latest
     steps:   
