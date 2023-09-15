@@ -46,7 +46,7 @@ jobs:
          manifests: |
           extras/jwt-secret.yaml
           kubernetes-manifests
-          frontend-ingress.yaml
+          extras/frontend-ingress.yaml
          # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
          # imagepullsecrets: |
          #  image-pull-secret1
