@@ -42,7 +42,9 @@ jobs:
         with:
            namespace: 'default'
            manifests: |
-              kubernetes-manifests-update
+            extras/jwt-secret.yaml
+            kubernetes-manifests
+            extras/frontend-ingress.yaml
            strategy: blue-green
            action: deploy
            route-method: ingress # substitute with service/smi as per need

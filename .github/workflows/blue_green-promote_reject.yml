@@ -30,7 +30,9 @@ jobs:
         with:
            namespace: 'default'
            manifests: |
-              kubernetes-manifests-update
+            extras/jwt-secret.yaml
+            kubernetes-manifests
+            extras/frontend-ingress.yaml
            strategy: blue-green
            route-method: ingress
            action: reject
@@ -54,7 +56,9 @@ jobs:
         with:
            namespace: 'default'
            manifests: |
-              kubernetes-manifests-update
+            extras/jwt-secret.yaml
+            kubernetes-manifests
+            extras/frontend-ingress.yaml
            strategy: blue-green
            route-method: ingress
            action: promote
