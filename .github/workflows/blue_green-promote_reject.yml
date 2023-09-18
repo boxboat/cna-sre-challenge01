@@ -56,8 +56,7 @@ jobs:
         with:
            namespace: 'default'
            manifests: |
-            extras/frontend-ingress.yaml
-            kubernetes-manifests
+            kubernetes-manifests/frontend.yaml
            strategy: blue-green
            route-method: ingress
            action: promote
