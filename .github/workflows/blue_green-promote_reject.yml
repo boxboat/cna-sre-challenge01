@@ -32,7 +32,7 @@ jobs:
            manifests: |
             kubernetes-manifests/frontend.yaml
            strategy: blue-green
-           route-method: ingress
+           route-method: pod
            action: reject
            skip-tls-verify: true
            annotate-namespace: false
@@ -58,7 +58,7 @@ jobs:
            manifests: |
             kubernetes-manifests/frontend.yaml
            strategy: blue-green
-           route-method: ingress
+           route-method: pod
            action: promote
            skip-tls-verify: true
            annotate-namespace: false
