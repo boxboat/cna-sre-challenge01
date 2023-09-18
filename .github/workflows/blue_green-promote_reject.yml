@@ -1,0 +1,60 @@
+name: Blue-Green Promote/Reject
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  Reject: 
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    steps:   
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+        id: install
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext
+      - name: GetClusterInfo
+        run: kubectl cluster-info --insecure-skip-tls-verify
+      - uses: Azure/k8s-deploy@v4
+        with:
+           namespace: 'default'
+           manifests: |
+              kubernetes-manifests-update
+           strategy: blue-green
+           route-method: ingress
+           action: reject
+  
+  Promote: 
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+        id: install
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext
+      - name: GetClusterInfo
+        run: kubectl cluster-info --insecure-skip-tls-verify   
+      - uses: Azure/k8s-deploy@v4
+        with:
+           namespace: 'default'
+           manifests: |
+              kubernetes-manifests-update
+           strategy: blue-green
+           route-method: ingress
+           action: promote
