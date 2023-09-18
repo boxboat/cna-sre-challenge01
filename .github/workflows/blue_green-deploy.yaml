@@ -46,7 +46,7 @@ jobs:
             kubernetes-manifests
            strategy: blue-green
            action: deploy
-           route-method: ingress # substitute with service/smi as per need
+           route-method: smi # substitute with service/smi as per need
            version-switch-buffer: 10
            skip-tls-verify: true
            
