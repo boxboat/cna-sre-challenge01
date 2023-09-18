@@ -34,7 +34,7 @@ jobs:
             kubernetes-manifests
             extras/frontend-ingress.yaml
            strategy: blue-green
-           route-method: ingress
+           route-method: service
            action: reject
   
   Promote: 
@@ -60,5 +60,5 @@ jobs:
             kubernetes-manifests
             extras/frontend-ingress.yaml
            strategy: blue-green
-           route-method: ingress
+           route-method: service
            action: promote

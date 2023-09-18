@@ -47,6 +47,6 @@ jobs:
             extras/frontend-ingress.yaml
            strategy: blue-green
            action: deploy
-           route-method: ingress # substitute with service/smi as per need
+           route-method: service # substitute with service/smi as per need
            version-switch-buffer: 10
            
