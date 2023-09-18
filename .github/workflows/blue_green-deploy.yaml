@@ -47,3 +47,4 @@ jobs:
            action: deploy
            route-method: ingress # substitute with service/smi as per need
            version-switch-buffer: 10
+           
