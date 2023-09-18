@@ -1,54 +1,54 @@
-# This is a basic workflow to help you get started with Actions
+# # This is a basic workflow to help you get started with Actions
 
-name: App Deploy
+# name: App Deploy
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
+# # Controls when the workflow will run
+# on:
+#   # Triggers the workflow on push or pull request events but only for the "main" branch
+#   push:
+#     branches: [ "main" ]
+#   # pull_request:
+#   #   branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   # This workflow contains a single job called "build"
+#   build:
+#     # The type of runner that the job will run on
+#     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+#     # Steps represent a sequence of tasks that will be executed as part of the job
+#     steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#       - uses: actions/checkout@v3
       
-      - uses: azure/setup-kubectl@v3
-        # with:
-          # version: '<version>' # default is latest stable
-        id: install
+#       - uses: azure/setup-kubectl@v3
+#         # with:
+#           # version: '<version>' # default is latest stable
+#         id: install
         
-      - uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
-          # context: <context name>  #If left unspecified, current-context from kubeconfig is used as default
-        id: setcontext
+#       - uses: azure/k8s-set-context@v1
+#         with:
+#           method: kubeconfig
+#           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+#           # context: <context name>  #If left unspecified, current-context from kubeconfig is used as default
+#         id: setcontext
         
-      # - name: GetClusterInfo
-      #   run: kubectl cluster-info --insecure-skip-tls-verify
+#       # - name: GetClusterInfo
+#       #   run: kubectl cluster-info --insecure-skip-tls-verify
         
-      - uses: Azure/k8s-deploy@v4
-        with:
-         namespace: 'default'
-         manifests: |
-          extras/jwt-secret.yaml
-          kubernetes-manifests
-          extras/frontend-ingress.yaml
-         skip-tls-verify: true
-         # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
-         # imagepullsecrets: |
-         #  image-pull-secret1
-         #  image-pull-secret2
+#       - uses: Azure/k8s-deploy@v4
+#         with:
+#          namespace: 'default'
+#          manifests: |
+#           extras/jwt-secret.yaml
+#           kubernetes-manifests
+#           extras/frontend-ingress.yaml
+#          skip-tls-verify: true
+#          # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
+#          # imagepullsecrets: |
+#          #  image-pull-secret1
+#          #  image-pull-secret2
