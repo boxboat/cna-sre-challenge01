@@ -35,6 +35,7 @@ jobs:
            route-method: ingress
            action: reject
            skip-tls-verify: true
+           annotate-namespace: false
   
   Promote: 
     if: github.event.pull_request.merged == true
@@ -55,9 +56,9 @@ jobs:
         with:
            namespace: 'default'
            manifests: |
-            extras
-            kubernetes-manifests
+            kubernetes-manifests/frontend.yaml
            strategy: blue-green
            route-method: ingress
            action: promote
            skip-tls-verify: true
+           annotate-namespace: false
