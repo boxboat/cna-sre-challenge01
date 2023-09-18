@@ -37,8 +37,8 @@ jobs:
           # context: <context name>  #If left unspecified, current-context from kubeconfig is used as default
         id: setcontext
         
-      - name: GetClusterInfo
-        run: kubectl cluster-info --insecure-skip-tls-verify
+      # - name: GetClusterInfo
+      #   run: kubectl cluster-info --insecure-skip-tls-verify
         
       - uses: Azure/k8s-deploy@v4
         with:
@@ -47,6 +47,7 @@ jobs:
           extras/jwt-secret.yaml
           kubernetes-manifests
           extras/frontend-ingress.yaml
+         skip-tls-verify: true
          # images: 'contoso.azurecr.io/myapp:${{ event.run_id }}'
          # imagepullsecrets: |
          #  image-pull-secret1

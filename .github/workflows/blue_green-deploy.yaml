@@ -35,18 +35,17 @@ jobs:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
         id: setcontext
         
-      - name: GetClusterInfo
-        run: kubectl cluster-info --insecure-skip-tls-verify
+      # - name: GetClusterInfo
+      #   run: kubectl cluster-info --insecure-skip-tls-verify
         
       - uses: Azure/k8s-deploy@v4
         with:
            namespace: 'default'
            manifests: |
-            extras/jwt-secret.yaml
-            kubernetes-manifests
-            extras/frontend-ingress.yaml
+            kubernetes-manifests/frontend.yaml
            strategy: blue-green
            action: deploy
            route-method: service # substitute with service/smi as per need
            version-switch-buffer: 10
+           skip-tls-verify: true
            
