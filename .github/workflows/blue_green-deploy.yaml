@@ -46,7 +46,7 @@ jobs:
            strategy: blue-green
            action: deploy
            route-method: ingress # substitute with service/smi as per need
-           version-switch-buffer: 2
+           version-switch-buffer: 10
            skip-tls-verify: true
-           annotate-namespace: false
+          #  annotate-namespace: false
            

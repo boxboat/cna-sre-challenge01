@@ -35,7 +35,7 @@ jobs:
            route-method: ingress
            action: reject
            skip-tls-verify: true
-           annotate-namespace: false
+          #  annotate-namespace: false
   
   Promote: 
     if: github.event.pull_request.merged == true
@@ -61,4 +61,4 @@ jobs:
           #  route-method: ingress
            action: promote
            skip-tls-verify: true
-           annotate-namespace: false
+          #  annotate-namespace: false
