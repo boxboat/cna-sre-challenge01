@@ -2,4 +2,3 @@
 CNA training to demo GitHub Actions deployments
 
 testing123
-
